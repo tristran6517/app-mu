@@ -1,0 +1,57 @@
+.l-container {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.l-container .left {
+  width: 300px;
+  padding: 10px 10px 20px;
+  border-radius: 10px;
+  background: #ccc;
+}
+
+.l-container .right {
+  width: calc(100% - 350px)
+}
+
+.form {
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  label,
+  input,
+  select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid #fff;
+    padding: 5px;
+    border-radius: 10px;
+  }
+
+  label {
+    border: 0;
+    padding: 0;
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
