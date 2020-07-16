@@ -92,6 +92,8 @@ function delItem(item) {
 }
 
 function editItem(item) {
+  // Change title form
+  document.getElementById('title-form').innerHTML = "Edit User";
 
   // Hide/Show form
   document.getElementsByClassName('formAdd')[0].classList.remove('d-block');
@@ -111,21 +113,10 @@ function editItem(item) {
 
   // Event submit edit
   document.getElementById('form-edit').onsubmit = function () {
-    var editName = elName.value;
-    var editAge = elAge.value;
-    var editEmail = elEmail.value;
-    var editRole = elRole.value;
-    user.splice({
-      name: user[item].name,
-      age: user[item].age,
-      email: user[item].email,
-      role: user[item].role
-    }, 1, {
-      name: editName.trim(),
-      age: editAge.trim(),
-      email: editEmail.trim(),
-      role: editRole.trim()
-    })
+    user[item].name = elName.value;
+    user[item].age = elAge.value;
+    user[item].email = elEmail.value;
+    user[item].role = elRole.value;
 
     elName.value = '';
     elAge.value = '';
@@ -136,6 +127,19 @@ function editItem(item) {
     document.getElementsByClassName('formAdd')[0].classList.remove('d-none');
     document.getElementById('form-edit').classList.remove('d-block');
     document.getElementById('form-edit').classList.add('d-none');
+    
+    // Change title form
+    document.getElementById('title-form').innerHTML = "Add User";
+  }
+}
+
+function validateEmail(email, self) {
+  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if(!re.test(email)) {
+    self.style.border = '1px solid red';
+    alert('Please enter email valid');
+  } else {
+    self.style.border = '1px solid';
   }
 }
 

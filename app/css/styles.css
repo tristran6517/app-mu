@@ -337,6 +337,10 @@ template {
     border: 1px solid #fff;
     padding: 5px;
     border-radius: 10px; }
+    .form label:focus,
+    .form input:focus,
+    .form select:focus {
+      outline: none; }
   .form label {
     border: 0;
     padding: 0; }
