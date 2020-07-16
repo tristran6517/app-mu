@@ -70,7 +70,6 @@ function addItem(e) {
   var role = elRole.value;
 
   if (name && age && email && role) {
-
     user.push({
       name: name,
       age: age,
@@ -93,52 +92,51 @@ function delItem(item) {
 }
 
 function editItem(item) {
-alert('Coming soon....')
 
-  // // Hide/Show form
-  // document.getElementsByClassName('formAdd')[0].classList.remove('d-block');
-  // document.getElementsByClassName('formAdd')[0].classList.add('d-none');
-  // document.getElementsByClassName('formEdit')[0].classList.add('d-block');
-  // document.getElementsByClassName('formEdit')[0].classList.remove('d-none');
+  // Hide/Show form
+  document.getElementsByClassName('formAdd')[0].classList.remove('d-block');
+  document.getElementsByClassName('formAdd')[0].classList.add('d-none');
+  document.getElementById('form-edit').classList.add('d-block');
+  document.getElementById('form-edit').classList.remove('d-none');
 
-  // // Edit function
-  // var elName = document.getElementById('edit-name');
-  // var elAge = document.getElementById('edit-age');
-  // var elEmail = document.getElementById('edit-email');
-  // var elRole = document.getElementById('edit-role');
-  // elName.value = user[item].name;
-  // elAge.value = user[item].age;
-  // elEmail.value = user[item].email;
-  // elRole.value = user[item].role;
+  // Get value edit
+  var elName = document.getElementById('edit-name');
+  var elAge = document.getElementById('edit-age');
+  var elEmail = document.getElementById('edit-email');
+  var elRole = document.getElementById('edit-role');
+  elName.value = user[item].name;
+  elAge.value = user[item].age;
+  elEmail.value = user[item].email;
+  elRole.value = user[item].role;
 
-  // // Event edit
-  // document.getElementsByClassName('formEdit')[0].onsubmit = function () {
-  //   var editName = elName.value;
-  //   var editAge = elAge.value;
-  //   var editEmail = elEmail.value;
-  //   var editRole = elRole.value;
-  //   user.splice({
-  //     name: user[item].name,
-  //     age: user[item].age,
-  //     email: user[item].email,
-  //     role: user[item].role
-  //   }, 1, {
-  //     name: editName.trim(),
-  //     age: editAge.trim(),
-  //     email: editEmail.trim(),
-  //     role: editRole.trim()
-  //   })
+  // Event submit edit
+  document.getElementById('form-edit').onsubmit = function () {
+    var editName = elName.value;
+    var editAge = elAge.value;
+    var editEmail = elEmail.value;
+    var editRole = elRole.value;
+    user.splice({
+      name: user[item].name,
+      age: user[item].age,
+      email: user[item].email,
+      role: user[item].role
+    }, 1, {
+      name: editName.trim(),
+      age: editAge.trim(),
+      email: editEmail.trim(),
+      role: editRole.trim()
+    })
 
-  //   elName.value = '';
-  //   elAge.value = '';
-  //   elEmail.value = '';
-  //   elRole.value = 0;
-  //   fetchData();
-  //   document.getElementsByClassName('formAdd')[0].classList.add('d-block');
-  //   document.getElementsByClassName('formAdd')[0].classList.remove('d-none');
-  //   document.getElementsByClassName('formEdit')[0].classList.remove('d-block');
-  //   document.getElementsByClassName('formEdit')[0].classList.add('d-none');
-  // }
+    elName.value = '';
+    elAge.value = '';
+    elEmail.value = '';
+    elRole.value = 0;
+    fetchData();
+    document.getElementsByClassName('formAdd')[0].classList.add('d-block');
+    document.getElementsByClassName('formAdd')[0].classList.remove('d-none');
+    document.getElementById('form-edit').classList.remove('d-block');
+    document.getElementById('form-edit').classList.add('d-none');
+  }
 }
 
 fetchData();
