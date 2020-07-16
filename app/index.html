@@ -15,7 +15,7 @@
   <div class="l-container">
     <div class="left">
       <h3>Add User</h3>
-      <form name="formAdd" action="javascript:void(0);" class="form formAdd d-block" onsubmit="addItem()">
+      <form name="formAdd" action="javascript:void(0);" method="POST" class="form formAdd d-block" onsubmit="addItem()">
         <div class="form__row">
           <label for="name">Name<span class="text-danger">*</span></label>
           <input type="text" id="name" class="w-100">
@@ -38,7 +38,7 @@
         </div>
         <input type="submit" class="d-block btn btn-primary m-auto w-50" id="btn-submit" value="Add User"/>
       </form>
-      <form name="formEdit" action="javascript:void(0);" class="form formEdit d-none">
+      <form name="formEdit" action="javascript:void(0);" method="POST" class="form d-none" id="form-edit">
         <div class="form__row">
           <label for="name">Name<span class="text-danger">*</span></label>
           <input type="text" id="edit-name" class="w-100">
