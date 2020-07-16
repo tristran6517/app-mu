@@ -40,18 +40,12 @@ function fetchData() {
       data += '<td>' + user[i].name + '</td>';
       data += '<td>' + user[i].age + '</td>';
       data += '<td>' + user[i].email + '</td>';
-      data += '<td>' + checkRole(user[i].role) + '</td>';
+      data += '<td>' + permissions[user[i].role] + '</td>';
       data += '<td><button class="btn btn-primary mr-1" onclick="editItem(' + i + ')">Edit</button><button class="btn btn-danger" onclick="delItem(' + i + ')">Delete</button></td>';
       data += '</tr>';
     }
   }
   return el.innerHTML = data;
-}
-
-function checkRole(num) {
-  for (const ele in permissions) {
-    if (num == ele) return permissions[ele];
-  }
 }
 
 function addItem(e) {
