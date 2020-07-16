@@ -26,6 +26,12 @@ const user = [{
   }
 ]
 
+const permissions = {
+  1: 'Admin',
+  0: 'Customer',
+  2: 'User'
+}
+
 function fetchData() {
   var data = '';
   if (user.length > 0) {
@@ -43,20 +49,10 @@ function fetchData() {
 }
 
 function checkRole(num) {
-  if (num == 0) {
-    return 'Customer'
-  } else if (num == 1) {
-    return 'Admin'
-  } else {
-    return 'User'
+  for (const ele in permissions) {
+    if (num == ele) return permissions[ele];
   }
 }
-
-// function changeAge(year) {
-//   var date = new Date();
-//   var currentYear = date.getFullYear();
-//   return currentYear - year;
-// }
 
 function addItem(e) {
   event.preventDefault();
@@ -127,7 +123,7 @@ function editItem(item) {
     document.getElementsByClassName('formAdd')[0].classList.remove('d-none');
     document.getElementById('form-edit').classList.remove('d-block');
     document.getElementById('form-edit').classList.add('d-none');
-    
+
     // Change title form
     document.getElementById('title-form').innerHTML = "Add User";
   }
@@ -135,7 +131,7 @@ function editItem(item) {
 
 function validateEmail(email, self) {
   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if(!re.test(email)) {
+  if (!re.test(email)) {
     self.style.border = '1px solid red';
     alert('Please enter email valid');
   } else {

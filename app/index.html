@@ -30,11 +30,13 @@
         </div>
         <div class="form__row">
           <label for="role">Role</label>
-          <select name="role" id="role" class="form__select mb-4">
-            <option value="0" selected>Customer</option>
-            <option value="1">Admin</option>
-            <option value="2">User</option>
-          </select>
+          <div class="form__arrow mb-4 w-100">
+            <select name="role" id="role" class="form__select">
+              <option value="0" selected>Customer</option>
+              <option value="1">Admin</option>
+              <option value="2">User</option>
+            </select>
+          </div>
         </div>
         <input type="submit" class="d-block btn btn-primary m-auto w-50" id="btn-submit" value="Add User" />
       </form>
