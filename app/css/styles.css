@@ -328,6 +328,19 @@ template {
   .form__row {
     display: flex;
     flex-wrap: wrap; }
+  .form__arrow {
+    position: relative; }
+    .form__arrow:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 10px 5px 0 5px;
+      border-color: #007bff transparent transparent transparent;
+      transform: translateY(-50%); }
   .form label,
   .form input,
   .form select {
@@ -341,6 +354,8 @@ template {
     .form input:focus,
     .form select:focus {
       outline: none; }
+  .form select::-ms-expand {
+    display: none; }
   .form label {
     border: 0;
     padding: 0; }
