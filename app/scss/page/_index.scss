@@ -31,6 +31,9 @@
     border: 1px solid #fff;
     padding: 5px;
     border-radius: 10px;
+    &:focus {
+      outline: none;
+    }
   }
 
   label {
