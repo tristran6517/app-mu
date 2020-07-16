@@ -92,7 +92,6 @@ function delItem(item) {
 }
 
 function editItem(item) {
-
   // Hide/Show form
   document.getElementsByClassName('formAdd')[0].classList.remove('d-block');
   document.getElementsByClassName('formAdd')[0].classList.add('d-none');
@@ -111,21 +110,10 @@ function editItem(item) {
 
   // Event submit edit
   document.getElementById('form-edit').onsubmit = function () {
-    var editName = elName.value;
-    var editAge = elAge.value;
-    var editEmail = elEmail.value;
-    var editRole = elRole.value;
-    user.splice({
-      name: user[item].name,
-      age: user[item].age,
-      email: user[item].email,
-      role: user[item].role
-    }, 1, {
-      name: editName.trim(),
-      age: editAge.trim(),
-      email: editEmail.trim(),
-      role: editRole.trim()
-    })
+    user[item].name = elName.value;
+    user[item].age = elAge.value;
+    user[item].email = elEmail.value;
+    user[item].role = elRole.value;
 
     elName.value = '';
     elAge.value = '';
