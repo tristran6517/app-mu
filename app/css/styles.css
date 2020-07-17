@@ -311,7 +311,8 @@ template {
   width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  align-items: flex-start; }
 
 .l-container .left {
   width: 300px;
