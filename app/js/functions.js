@@ -1,24 +1,38 @@
+/* Declare
+--------------------------------------------------*/
 let el = document.getElementById('table__body');
+const els = document.getElementsByClassName('input-user');
+const btnEdit = document.getElementsByClassName('btn-edit');
+const btnDel = document.getElementsByClassName('btn-del');
+let titleForm = document.querySelector("#title-form");
+let btnAdd = document.querySelector("#btn-submit");
+let stateForm = true;
+let indexRow = 0;
 
-const user = [{
+
+const users = [{
+    id: 0,
     name: 'abc',
     age: 1994,
     email: 'test@admin.com',
     role: 0
   },
   {
+    id: 1,
     name: 'xyz',
     age: 1993,
     email: 'test@admin.com',
     role: 1
   },
   {
+    id: 2,
     name: 'cba',
     age: 1992,
     email: 'test@admin.com',
     role: 2
   },
   {
+    id: 3,
     name: 'zyx',
     age: 1991,
     email: 'test@admin.com',
@@ -32,101 +46,95 @@ const permissions = {
   2: 'User'
 }
 
+const objUser = {
+  id: guidGenerator(),
+  name: '',
+  age: 0,
+  email: '',
+  role: 0
+};
+
+/* Function
+--------------------------------------------------*/
+function guidGenerator() {
+  var S4 = function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  };
+  return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+}
+
 function fetchData() {
   var data = '';
-  if (user.length > 0) {
-    for (var i = 0; i < user.length; i++) {
+  if (users.length > 0) {
+    for (var i = 0; i < users.length; i++) {
       data += '<tr>';
-      data += '<td>' + user[i].name + '</td>';
-      data += '<td>' + user[i].age + '</td>';
-      data += '<td>' + user[i].email + '</td>';
-      data += '<td>' + checkRole(user[i].role) + '</td>';
-      data += '<td><button class="btn btn-primary mr-1" onclick="editItem(' + i + ')">Edit</button><button class="btn btn-danger" onclick="delItem(' + i + ')">Delete</button></td>';
+      data += '<td>' + users[i].name + '</td>';
+      data += '<td>' + users[i].age + '</td>';
+      data += '<td>' + users[i].email + '</td>';
+      data += '<td>' + permissions[users[i].role] + '</td>';
+      data += '<td><button class="btn btn-primary mr-1 btn-edit">Edit</button><button class="btn btn-danger btn-del">Delete</button></td>';
       data += '</tr>';
     }
   }
   return el.innerHTML = data;
 }
 
-function checkRole(num) {
-  for (const ele in permissions) {
-    if (num == ele) return permissions[ele];
-  }
-}
+Array.from(els).forEach((el) => {
+  el.addEventListener('change', function (e) {
+    objUser[e.target.name] = e.target.value;
+    return objUser;
+  })
+})
 
 function addItem(e) {
   event.preventDefault();
-  var elName = document.getElementById('name');
-  var elAge = document.getElementById('age');
-  var elEmail = document.getElementById('email');
-  var elRole = document.getElementById('role');
-  var name = elName.value;
-  var age = elAge.value;
-  var email = elEmail.value;
-  var role = elRole.value;
-
-  if (name && age && email && role) {
-    user.push({
-      name: name,
-      age: age,
-      email: email,
-      role: role
-    });
-    elName.value = '';
-    elAge.value = '';
-    elEmail.value = '';
-    elRole.value = 0;
-    fetchData();
+  if (stateForm) {
+    users.push(objUser);
   } else {
-    alert("Please fill information")
+    editItem(indexRow);
+    stateForm = true;
   }
+  resetInput();
+  fetchData();
+  Array.from(btnEdit).forEach((btn, index) => {
+    btn.addEventListener('click', function (e) {
+      setValueEdit(index);
+      indexRow = index;
+    })
+  })
+  Array.from(btnDel).forEach((btn, index) => {
+    btn.addEventListener('click', function (e) {
+      delItem(index);
+    })
+  })
 }
 
 function delItem(item) {
-  user.splice(item, 1)
+  users.splice(item, 1)
   fetchData();
+  Array.from(btnDel).forEach((btn, index) => {
+    btn.addEventListener('click', function (e) {
+      delItem(index);
+    })
+  })
 }
 
-function editItem(item) {
-  // Change title form
-  document.getElementById('title-form').innerHTML = "Edit User";
+function setValueEdit(index) {
+  titleForm.innerHTML = "Edit User";
+  btnAdd.value = "Edit";
+  btnAdd.classList.add("btn-danger");
+  const obj = users[index];
+  Array.from(els).forEach(el => {
+    var nameObj = el.name;
+    el.value = obj[nameObj];
+  });
+  stateForm = false;
+}
 
-  // Hide/Show form
-  document.getElementsByClassName('formAdd')[0].classList.remove('d-block');
-  document.getElementsByClassName('formAdd')[0].classList.add('d-none');
-  document.getElementById('form-edit').classList.add('d-block');
-  document.getElementById('form-edit').classList.remove('d-none');
-
-  // Get value edit
-  var elName = document.getElementById('edit-name');
-  var elAge = document.getElementById('edit-age');
-  var elEmail = document.getElementById('edit-email');
-  var elRole = document.getElementById('edit-role');
-  elName.value = user[item].name;
-  elAge.value = user[item].age;
-  elEmail.value = user[item].email;
-  elRole.value = user[item].role;
-
-  // Event submit edit
-  document.getElementById('form-edit').onsubmit = function () {
-    user[item].name = elName.value;
-    user[item].age = elAge.value;
-    user[item].email = elEmail.value;
-    user[item].role = elRole.value;
-
-    elName.value = '';
-    elAge.value = '';
-    elEmail.value = '';
-    elRole.value = 0;
-    fetchData();
-    document.getElementsByClassName('formAdd')[0].classList.add('d-block');
-    document.getElementsByClassName('formAdd')[0].classList.remove('d-none');
-    document.getElementById('form-edit').classList.remove('d-block');
-    document.getElementById('form-edit').classList.add('d-none');
-
-    // Change title form
-    document.getElementById('title-form').innerHTML = "Add User";
-  }
+function editItem(index) {
+  Array.from(els).forEach(el => {
+    users[index][el.name] = el.value;
+  })
 }
 
 function validateEmail(email, self) {
@@ -135,8 +143,31 @@ function validateEmail(email, self) {
     self.style.border = '1px solid red';
     alert('Please enter email valid');
   } else {
-    self.style.border = '1px solid';
+    self.style.border = '1px solid #fff';
   }
 }
 
+function resetInput() {
+  Array.from(els).forEach(el => {
+    el.value = '';
+    if (el.name === "role") el.value = 0;
+  });
+  titleForm.innerHTML = "Add User";
+  btnAdd.value = "Add";
+  btnAdd.classList.remove("btn-danger");
+}
+
 fetchData();
+
+Array.from(btnEdit).forEach((btn, index) => {
+  btn.addEventListener('click', function (e) {
+    setValueEdit(index);
+    indexRow = index;
+  })
+})
+
+Array.from(btnDel).forEach((btn, index) => {
+  btn.addEventListener('click', function (e) {
+    delItem(index);
+  })
+})
