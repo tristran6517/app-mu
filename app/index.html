@@ -6,13 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/styles.css">
   <title>User Managenent</title>
 </head>
 
 <body>
   <h2 class="mt-3 mb-3 text-center">User Management</h2>
-  <div class="l-container">
+  <div class="l-container mb-3 row">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 p-0">
+      <div class="input-group">
+        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-primary"></span>Search</button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="l-container d-flex align-items-start justify-content-between">
     <div class="left">
       <h3 id="title-form">Add User</h3>
       <form name="formAdd" method="POST" class="form formAdd d-block" onsubmit="addItem()">
@@ -26,7 +38,8 @@
         </div>
         <div class="form__row">
           <label for="email">Email<span class="text-danger">*</span></label>
-          <input type="email" id="email" onblur="validateEmail(this.value,this)" name="email" class="input-user" required>
+          <input type="email" id="email" onblur="validateEmail(this.value,this)" name="email" class="input-user"
+            required>
         </div>
         <div class="form__row">
           <label for="role">Role</label>
@@ -40,36 +53,16 @@
         </div>
         <input type="submit" class="d-block btn btn-primary m-auto w-50" id="btn-submit" value="Add User" />
       </form>
-      <!-- <form name="formEdit" action="javascript:void(0);" method="POST" class="form d-none" id="form-edit">
-        <div class="form__row">
-          <label for="name">Name<span class="text-danger">*</span></label>
-          <input type="text" id="edit-name" class="w-100">
-        </div>
-        <div class="form__row">
-          <label for="age">Age<span class="text-danger">*</span></label>
-          <input type="number" min="1900" max="2049" id="edit-age">
-        </div>
-        <div class="form__row">
-          <label for="email">Email<span class="text-danger">*</span></label>
-          <input type="email" id="edit-email" onblur="validateEmail(this.value, this)">
-        </div>
-        <div class="form__row">
-          <label for="role">Role</label>
-          <select name="role" id="edit-role" class="form__select mb-4">
-            <option value="0" selected>Customer</option>
-            <option value="1">Admin</option>
-            <option value="2">User</option>
-          </select>
-        </div>
-        <input type="submit" class="d-block btn btn-danger m-auto w-50" value="Edit User" />
-      </form> -->
     </div>
     <div class="right">
       <table class="table table-hover">
         <thead>
           <tr>
             <th>Name</th>
-            <th>Age</th>
+            <th>
+              Age
+              <i class="fa fa-sort btn-sort" aria-hidden="true"></i>
+            </th>
             <th>Email</th>
             <th>Role</th>
             <th>Module</th>
@@ -78,6 +71,27 @@
         <tbody id="table__body">
         </tbody>
       </table>
+    </div>
+  </div>
+  <div class="modal-popup d-none">
+    <div class="modal-popup__wrapper">
+      <div class="modal-popup__close">X</div>
+      <div class="modal-popup__row">
+        <p class="ttl mr-1">Name: </p>
+        <p class="desc" name="name"></p>
+      </div>
+      <div class="modal-popup__row">
+        <p class="ttl mr-1">Age: </p>
+        <p class="desc" name="age"></p>
+      </div>
+      <div class="modal-popup__row">
+        <p class="ttl mr-1">Email: </p>
+        <p class="desc" name="email"></p>
+      </div>
+      <div class="modal-popup__row">
+        <p class="ttl mr-1">Role: </p>
+        <p class="desc" name="role"></p>
+      </div>
     </div>
   </div>
   <script src="./js/functions.js"></script>

@@ -4,6 +4,8 @@ let el = document.getElementById('table__body');
 const els = document.getElementsByClassName('input-user');
 const btnEdit = document.getElementsByClassName('btn-edit');
 const btnDel = document.getElementsByClassName('btn-del');
+const btnCheck = document.getElementsByClassName('btn-check');
+const modalDesc = document.querySelectorAll('.modal-popup__row .desc');
 let titleForm = document.querySelector("#title-form");
 let btnAdd = document.querySelector("#btn-submit");
 let stateForm = true;
@@ -72,7 +74,11 @@ function fetchData() {
       data += '<td>' + users[i].age + '</td>';
       data += '<td>' + users[i].email + '</td>';
       data += '<td>' + permissions[users[i].role] + '</td>';
-      data += '<td><button class="btn btn-primary mr-1 btn-edit">Edit</button><button class="btn btn-danger btn-del">Delete</button></td>';
+      data += `<td>
+        <button class="btn btn-info btn-check mr-1">Check</button>
+        <button class="btn btn-primary mr-1 btn-edit">Edit</button>
+        <button class="btn btn-danger btn-del">Delete</button>
+      </td>`;
       data += '</tr>';
     }
   }
@@ -96,17 +102,7 @@ function addItem(e) {
   }
   resetInput();
   fetchData();
-  Array.from(btnEdit).forEach((btn, index) => {
-    btn.addEventListener('click', function (e) {
-      setValueEdit(index);
-      indexRow = index;
-    })
-  })
-  Array.from(btnDel).forEach((btn, index) => {
-    btn.addEventListener('click', function (e) {
-      delItem(index);
-    })
-  })
+  fetchBtn();
 }
 
 function delItem(item) {
@@ -129,6 +125,14 @@ function setValueEdit(index) {
     el.value = obj[nameObj];
   });
   stateForm = false;
+}
+
+function setValuePopup(index) {
+  const obj = users[index];
+  Array.from(modalDesc).forEach(desc => {
+    var nameObj = desc.getAttribute("name");
+    desc.innerHTML = obj[nameObj];
+  });
 }
 
 function editItem(index) {
@@ -157,17 +161,38 @@ function resetInput() {
   btnAdd.classList.remove("btn-danger");
 }
 
+function fetchBtn() {
+  Array.from(btnEdit).forEach((btn, index) => {
+    btn.addEventListener('click', function (e) {
+      setValueEdit(index);
+      indexRow = index;
+    })
+  })
+
+  Array.from(btnDel).forEach((btn, index) => {
+    btn.addEventListener('click', function (e) {
+      delItem(index);
+    })
+  })
+
+  Array.from(btnCheck).forEach((btn, index) => {
+    btn.addEventListener('click', function (e) {
+      modalPopup.classList.remove('d-none')
+      setValuePopup(index);
+    })
+  })
+}
+
+var modalPopup = document.getElementsByClassName('modal-popup')[0];
+document.getElementsByClassName("modal-popup__close")[0].addEventListener('click', function () {
+  modalPopup.classList.add('d-none')
+})
+
+window.onclick = function (event) {
+  if (event.target == modalPopup) {
+    modalPopup.classList.add('d-none')
+  }
+}
+
 fetchData();
-
-Array.from(btnEdit).forEach((btn, index) => {
-  btn.addEventListener('click', function (e) {
-    setValueEdit(index);
-    indexRow = index;
-  })
-})
-
-Array.from(btnDel).forEach((btn, index) => {
-  btn.addEventListener('click', function (e) {
-    delItem(index);
-  })
-})
+fetchBtn();
