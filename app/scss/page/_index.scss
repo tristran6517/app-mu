@@ -1,9 +1,6 @@
 .l-container {
   width: 1200px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
 }
 
 .l-container .left {
@@ -80,4 +77,44 @@
 .table td,
 .table th {
   vertical-align: middle;
+}
+
+.modal-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .7);
+
+  &__wrapper {
+    position: absolute;
+    width: 800px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  &__close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__row .ttl{
+    width: 50px;
+  }
+
+  &__row .desc {
+    width: calc(100% - 70px);
+  }
 }
