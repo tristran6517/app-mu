@@ -17,10 +17,21 @@
   <div class="l-container mb-3 row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 p-0">
       <div class="input-group">
-        <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search">
+        <input type="text" class="form-control" id="input-search" placeholder="Search">
         <span class="input-group-btn">
-          <button type="button" class="btn btn-primary"></span>Search</button>
+          <button type="button" class="btn btn-primary" id="btn-search"></span>Search</button>
         </span>
+      </div>
+    </div>
+    <div class="offset-md-2 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="wrapper row d-flex align-items-center">
+        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3" for="sort-role">Sort by Role:</label>
+        <select id="sort-role" class="custom-select col-xs-9 col-sm-9 col-md-9 col-lg-9">
+          <option selected>Open this select menu</option>
+          <option value="0">Customer</option>
+          <option value="1">Admin</option>
+          <option value="2">User</option>
+        </select>
       </div>
     </div>
   </div>
@@ -76,22 +87,6 @@
   <div class="modal-popup d-none">
     <div class="modal-popup__wrapper">
       <div class="modal-popup__close">X</div>
-      <div class="modal-popup__row">
-        <p class="ttl mr-1">Name: </p>
-        <p class="desc" name="name"></p>
-      </div>
-      <div class="modal-popup__row">
-        <p class="ttl mr-1">Age: </p>
-        <p class="desc" name="age"></p>
-      </div>
-      <div class="modal-popup__row">
-        <p class="ttl mr-1">Email: </p>
-        <p class="desc" name="email"></p>
-      </div>
-      <div class="modal-popup__row">
-        <p class="ttl mr-1">Role: </p>
-        <p class="desc" name="role"></p>
-      </div>
     </div>
   </div>
   <script src="./js/functions.js"></script>

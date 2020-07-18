@@ -393,6 +393,7 @@ template {
     display: flex;
     justify-content: space-between; }
   .modal-popup__row .ttl {
-    width: 50px; }
+    width: 50px;
+    text-transform: capitalize; }
   .modal-popup__row .desc {
     width: calc(100% - 70px); }
