@@ -178,7 +178,7 @@ function resetInput() {
     if (el.name === "role") el.value = 0;
   });
   titleForm.innerHTML = "Add User";
-  btnAdd.value = "Add";
+  btnAdd.value = "Add User";
   btnAdd.classList.remove("btn-danger");
 }
 
@@ -205,25 +205,28 @@ function fetchBtn() {
 }
 
 function handleSearch(txtCompare) {
-  users.find((o, i) => {
-    if (o.name == txtCompare) {
-      var data = '';
-      data += '<tr>';
-      data += '<td>' + users[i].name + '</td>';
-      data += '<td>' + users[i].age + '</td>';
-      data += '<td>' + users[i].email + '</td>';
-      data += '<td>' + permissions[users[i].role] + '</td>';
-      data += `<td>
-            <button class="btn btn-info btn-check mr-1">Check</button>
-            <button class="btn btn-primary mr-1 btn-edit">Edit</button>
-            <button class="btn btn-danger btn-del">Delete</button>
-          </td>`;
-      data += '</tr>';
-      return el.innerHTML = data;
-    } else {
-      fetchData();
-    }
-  })
+  if(txtCompare) {
+     var result = users.filter(user => user.name.toLowerCase().indexOf(txtCompare) !== -1);
+     var data = '';
+     if (result.length > 0) {
+       for (var i = 0; i < result.length; i++) {
+         data += '<tr>';
+         data += '<td>' + result[i].name + '</td>';
+         data += '<td>' + result[i].age + '</td>';
+         data += '<td>' + result[i].email + '</td>';
+         data += '<td>' + permissions[result[i].role] + '</td>';
+         data += `<td>
+           <button class="btn btn-info btn-check mr-1">Check</button>
+           <button class="btn btn-primary mr-1 btn-edit">Edit</button>
+           <button class="btn btn-danger btn-del">Delete</button>
+         </td>`;
+         data += '</tr>';
+       }
+     }
+     return el.innerHTML = data;
+  } else {
+    fetchData();
+  }
 }
 
 function handleSelectSort(objs) {
@@ -246,7 +249,7 @@ function handleSelectSort(objs) {
   return el.innerHTML = data;
 }
 
-document.querySelector('#input-search').addEventListener('keyup', function (e) {
+document.querySelector('#input-search').addEventListener('change', function (e) {
   txtInputSearch = e.target.value;
   return txtInputSearch;
 })
@@ -259,12 +262,12 @@ document.querySelector('#btn-search').addEventListener('click', function () {
 
 
 document.querySelector('.btn-sort').addEventListener('click', function () {
-  stateSortAge = !stateSortAge;
   if (stateSortAge) {
     users.sort((a, b) => a.age - b.age)
   } else {
     users.sort((a, b) => b.age - a.age)
   }
+  stateSortAge = !stateSortAge;
   fetchData();
   fetchBtn();
   resetInput()
