@@ -16,35 +16,7 @@ const btnCheck = document.getElementsByClassName('btn-check');
 const modalDesc = document.querySelectorAll('.modal-popup__row .desc');
 
 
-const users = [{
-    id: 0,
-    name: 'abc',
-    age: 1994,
-    email: 'test@admin.com',
-    role: 0
-  },
-  {
-    id: 1,
-    name: 'xyz',
-    age: 1993,
-    email: 'test@admin.com',
-    role: 1
-  },
-  {
-    id: 2,
-    name: 'cba',
-    age: 1992,
-    email: 'test@admin.com',
-    role: 2
-  },
-  {
-    id: 3,
-    name: 'zyx',
-    age: 1991,
-    email: 'test@admin.com',
-    role: 0
-  }
-]
+const users = [];
 
 const permissions = {
   1: 'Admin',
@@ -70,23 +42,27 @@ function guidGenerator() {
 }
 
 function fetchData() {
-  var data = '';
-  if (users.length > 0) {
-    for (var i = 0; i < users.length; i++) {
-      data += '<tr>';
-      data += '<td>' + users[i].name + '</td>';
-      data += '<td>' + users[i].age + '</td>';
-      data += '<td>' + users[i].email + '</td>';
-      data += '<td>' + permissions[users[i].role] + '</td>';
-      data += `<td>
-        <button class="btn btn-info btn-check mr-1">Check</button>
-        <button class="btn btn-primary mr-1 btn-edit">Edit</button>
-        <button class="btn btn-danger btn-del">Delete</button>
-      </td>`;
-      data += '</tr>';
-    }
+  TableRow(users);
+}
+
+function TableRow(data) {
+  var str = '';
+  if (data.length > 0) {
+    data.map(dt => {
+      str += '<tr>';
+      str += '<td>' + dt.name + '</td>';
+      str += '<td>' + dt.age + '</td>';
+      str += '<td>' + dt.email + '</td>';
+      str += '<td>' + permissions[dt.role] + '</td>';
+      str += `<td>
+         <button class="btn btn-info btn-check mr-1">Check</button>
+         <button class="btn btn-primary mr-1 btn-edit">Edit</button>
+         <button class="btn btn-danger btn-del">Delete</button>
+       </td>`;
+      str += '</tr>';
+    })
   }
-  return el.innerHTML = data;
+  return el.innerHTML = str;
 }
 
 Array.from(els).forEach((el) => {
@@ -98,8 +74,12 @@ Array.from(els).forEach((el) => {
 
 function addItem(e) {
   event.preventDefault();
+  objUser.id = this.guidGenerator();
+  var obj = {
+    ...objUser
+  };
   if (stateForm) {
-    users.push(objUser);
+    users.push(obj);
   } else {
     editItem(indexRow);
     stateForm = true;
@@ -110,13 +90,10 @@ function addItem(e) {
 }
 
 function delItem(item) {
-  users.splice(item, 1)
+  users.splice(item, 1);
+  resetInput();
   fetchData();
-  Array.from(btnDel).forEach((btn, index) => {
-    btn.addEventListener('click', function (e) {
-      delItem(index);
-    })
-  })
+  fetchBtn();
 }
 
 function setValueEdit(index) {
@@ -173,6 +150,7 @@ function validateEmail(email, self) {
 }
 
 function resetInput() {
+  document.querySelectorAll("input").value = 0;
   Array.from(els).forEach(el => {
     el.value = '';
     if (el.name === "role") el.value = 0;
@@ -182,11 +160,23 @@ function resetInput() {
   btnAdd.classList.remove("btn-danger");
 }
 
+function findIndex(id) {
+  var usersClone = [...users];
+  var result = -1;
+  usersClone.forEach((user, index) => {
+    if (user.id === id) {
+      result = index;
+    }
+  });
+  return result;
+}
+
 function fetchBtn() {
   Array.from(btnEdit).forEach((btn, index) => {
     btn.addEventListener('click', function (e) {
-      setValueEdit(index);
-      indexRow = index;
+      var id = findIndex(users[index].id);
+      setValueEdit(id);
+      indexRow = id;
     })
   })
 
@@ -205,61 +195,25 @@ function fetchBtn() {
 }
 
 function handleSearch(txtCompare) {
-  if(txtCompare) {
-     var result = users.filter(user => user.name.toLowerCase().indexOf(txtCompare) !== -1);
-     var data = '';
-     if (result.length > 0) {
-       for (var i = 0; i < result.length; i++) {
-         data += '<tr>';
-         data += '<td>' + result[i].name + '</td>';
-         data += '<td>' + result[i].age + '</td>';
-         data += '<td>' + result[i].email + '</td>';
-         data += '<td>' + permissions[result[i].role] + '</td>';
-         data += `<td>
-           <button class="btn btn-info btn-check mr-1">Check</button>
-           <button class="btn btn-primary mr-1 btn-edit">Edit</button>
-           <button class="btn btn-danger btn-del">Delete</button>
-         </td>`;
-         data += '</tr>';
-       }
-     }
-     return el.innerHTML = data;
+  if (txtCompare) {
+    var results = users.filter(user => user.name.toLowerCase().indexOf(txtCompare) !== -1);
+    TableRow(results);
   } else {
     fetchData();
   }
 }
 
 function handleSelectSort(objs) {
-  var data = '';
-  if (objs.length > 0) {
-    for (var i = 0; i < objs.length; i++) {
-      data += '<tr>';
-      data += '<td>' + objs[i].name + '</td>';
-      data += '<td>' + objs[i].age + '</td>';
-      data += '<td>' + objs[i].email + '</td>';
-      data += '<td>' + permissions[objs[i].role] + '</td>';
-      data += `<td>
-        <button class="btn btn-info btn-check mr-1">Check</button>
-        <button class="btn btn-primary mr-1 btn-edit">Edit</button>
-        <button class="btn btn-danger btn-del">Delete</button>
-      </td>`;
-      data += '</tr>';
-    }
-  }
-  return el.innerHTML = data;
+  TableRow(objs);
 }
 
-document.querySelector('#input-search').addEventListener('change', function (e) {
-  txtInputSearch = e.target.value;
-  return txtInputSearch;
-})
-
-
 document.querySelector('#btn-search').addEventListener('click', function () {
+  txtInputSearch = document.querySelector('#input-search').value;
   handleSearch(txtInputSearch);
+  document.querySelector('#input-search').value = "";
   fetchBtn();
+  resetInput();
 })
-
 
 document.querySelector('.btn-sort').addEventListener('click', function () {
   if (stateSortAge) {
@@ -270,7 +224,7 @@ document.querySelector('.btn-sort').addEventListener('click', function () {
   stateSortAge = !stateSortAge;
   fetchData();
   fetchBtn();
-  resetInput()
+  resetInput();
 })
 
 window.onclick = function (event) {
@@ -280,6 +234,7 @@ window.onclick = function (event) {
 }
 
 document.querySelector("#sort-role").addEventListener('change', function (e) {
+  resetInput();
   var target = e.target;
   var value = target.value;
   var result = users.filter(e => e.role == value);
