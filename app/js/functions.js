@@ -270,7 +270,7 @@ document.querySelector("#sort-role").addEventListener('change', function (e) {
   resetInput();
   var target = e.target;
   var value = target.value;
-  listUsers = listUsers.filter(e => e.role == value);
+  listUsers = users.filter(e => e.role == value);
   if (listUsers.length > 0) {
     TableRow(listUsers);
   } else {
