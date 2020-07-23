@@ -397,3 +397,6 @@ template {
     text-transform: capitalize; }
   .modal-popup__row .desc {
     width: calc(100% - 70px); }
+
+.btn-sort {
+  cursor: pointer; }
