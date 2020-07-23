@@ -16,7 +16,52 @@ const btnCheck = document.getElementsByClassName('btn-check');
 const modalDesc = document.querySelectorAll('.modal-popup__row .desc');
 
 
-const users = [];
+const users = [
+  {
+    id: 0,
+    name: "Ele 0",
+    age: 1994,
+    email: "test@gmail.com",
+    role: 0
+  },
+  {
+    id: 1,
+    name: "Ele 1",
+    age: 1994,
+    email: "test@gmail.com",
+    role: 1
+  },
+  {
+    id: 2,
+    name: "Ele 2",
+    age: 1994,
+    email: "test@gmail.com",
+    role: 1
+  },
+  {
+    id: this.guidGenerator(),
+    name: "ReactJS",
+    age: 2013,
+    email: "test@gmail.com",
+    role: 0
+  },
+  {
+    id: this.guidGenerator(),
+    name: "AngularJS",
+    age: 2010,
+    email: "test@gmail.com",
+    role: 1
+  },
+  {
+    id: this.guidGenerator(),
+    name: "VueJS",
+    age: 2014,
+    email: "test@gmail.com",
+    role: 1
+  },
+];
+
+let listUsers = [];
 
 const permissions = {
   1: 'Admin',
@@ -42,7 +87,8 @@ function guidGenerator() {
 }
 
 function fetchData() {
-  TableRow(users);
+  listUsers = [...users]
+  TableRow(listUsers);
 }
 
 function TableRow(data) {
@@ -89,8 +135,9 @@ function addItem(e) {
   fetchBtn();
 }
 
-function delItem(item) {
-  users.splice(item, 1);
+function delItem(index) {
+  var indexUserDelete = users.findIndex(user => user.id === listUsers[index].id);
+  listUsers = users.splice(indexUserDelete, 1);
   resetInput();
   fetchData();
   fetchBtn();
@@ -160,23 +207,12 @@ function resetInput() {
   btnAdd.classList.remove("btn-danger");
 }
 
-function findIndex(id) {
-  var usersClone = [...users];
-  var result = -1;
-  usersClone.forEach((user, index) => {
-    if (user.id === id) {
-      result = index;
-    }
-  });
-  return result;
-}
-
 function fetchBtn() {
   Array.from(btnEdit).forEach((btn, index) => {
     btn.addEventListener('click', function (e) {
-      var id = findIndex(users[index].id);
-      setValueEdit(id);
-      indexRow = id;
+      var indexUserEdit = users.findIndex(user => user.id === listUsers[index].id);
+      setValueEdit(indexUserEdit);
+      indexRow = indexUserEdit;
     })
   })
 
@@ -188,23 +224,20 @@ function fetchBtn() {
 
   Array.from(btnCheck).forEach((btn, index) => {
     btn.addEventListener('click', function (e) {
-      modalPopup.classList.remove('d-none')
-      setValuePopup(index);
+      modalPopup.classList.remove('d-none');
+      var indexUserCheck = users.findIndex(user => user.id === listUsers[index].id)
+      setValuePopup(indexUserCheck);
     })
   })
 }
 
 function handleSearch(txtCompare) {
   if (txtCompare) {
-    var results = users.filter(user => user.name.toLowerCase().indexOf(txtCompare) !== -1);
-    TableRow(results);
+    listUsers = listUsers.filter(user => user.name.toLowerCase().indexOf(txtCompare) !== -1);
+    TableRow(listUsers);
   } else {
     fetchData();
   }
-}
-
-function handleSelectSort(objs) {
-  TableRow(objs);
 }
 
 document.querySelector('#btn-search').addEventListener('click', function () {
@@ -237,9 +270,9 @@ document.querySelector("#sort-role").addEventListener('change', function (e) {
   resetInput();
   var target = e.target;
   var value = target.value;
-  var result = users.filter(e => e.role == value);
-  if (result.length > 0) {
-    handleSelectSort(result);
+  listUsers = listUsers.filter(e => e.role == value);
+  if (listUsers.length > 0) {
+    TableRow(listUsers);
   } else {
     fetchData();
   }
