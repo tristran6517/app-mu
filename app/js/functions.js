@@ -128,6 +128,7 @@ function addItem(e) {
     users.push(obj);
   } else {
     editItem(indexRow);
+    document.getElementById("sort-role").selectedIndex="0";
     stateForm = true;
   }
   resetInput();
