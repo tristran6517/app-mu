@@ -233,7 +233,7 @@ function fetchBtn() {
 
 function handleSearch(txtCompare) {
   if (txtCompare) {
-    listUsers = listUsers.filter(user => user.name.toLowerCase().indexOf(txtCompare) !== -1);
+    listUsers = users.filter(user => user.name.toLowerCase().indexOf(txtCompare) !== -1);
     TableRow(listUsers);
   } else {
     fetchData();
