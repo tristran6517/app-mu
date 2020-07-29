@@ -16,8 +16,7 @@ const btnCheck = document.getElementsByClassName('btn-check');
 const modalDesc = document.querySelectorAll('.modal-popup__row .desc');
 
 
-const users = [
-  {
+const users = [{
     id: 0,
     name: "Ele 0",
     age: 1994,
@@ -128,20 +127,16 @@ function addItem(e) {
     users.push(obj);
   } else {
     editItem(indexRow);
-    document.getElementById("sort-role").selectedIndex="0";
+    document.getElementById("sort-role").selectedIndex = "0";
     stateForm = true;
   }
-  resetInput();
-  fetchData();
-  fetchBtn();
+  reloadEvent();
 }
 
 function delItem(index) {
   var indexUserDelete = users.findIndex(user => user.id === listUsers[index].id);
   listUsers = users.splice(indexUserDelete, 1);
-  resetInput();
-  fetchData();
-  fetchBtn();
+  reloadEvent();
 }
 
 function setValueEdit(index) {
@@ -159,7 +154,7 @@ function setValueEdit(index) {
 function setValuePopup(index) {
   const obj = users[index];
   popup(obj);
-  fetchBtn();
+  reloadEvent();
   document.getElementsByClassName("modal-popup__close")[0].addEventListener('click', function () {
     modalPopup.classList.add('d-none')
   })
@@ -241,6 +236,12 @@ function handleSearch(txtCompare) {
   }
 }
 
+function reloadEvent() {
+  resetInput();
+  fetchData();
+  fetchBtn();
+}
+
 document.querySelector('#btn-search').addEventListener('click', function () {
   txtInputSearch = document.querySelector('#input-search').value;
   handleSearch(txtInputSearch);
@@ -250,21 +251,13 @@ document.querySelector('#btn-search').addEventListener('click', function () {
 })
 
 document.querySelector('.btn-sort').addEventListener('click', function () {
-  if (stateSortAge) {
-    users.sort((a, b) => a.age - b.age)
-  } else {
-    users.sort((a, b) => b.age - a.age)
-  }
+  (stateSortAge) ? users.sort((a, b) => a.age - b.age): users.sort((a, b) => b.age - a.age);
   stateSortAge = !stateSortAge;
-  fetchData();
-  fetchBtn();
-  resetInput();
+  reloadEvent();
 })
 
 window.onclick = function (event) {
-  if (event.target == modalPopup) {
-    modalPopup.classList.add('d-none')
-  }
+  if (event.target == modalPopup) modalPopup.classList.add('d-none');
 }
 
 document.querySelector("#sort-role").addEventListener('change', function (e) {
@@ -272,11 +265,7 @@ document.querySelector("#sort-role").addEventListener('change', function (e) {
   var target = e.target;
   var value = target.value;
   listUsers = users.filter(e => e.role == value);
-  if (listUsers.length > 0) {
-    TableRow(listUsers);
-  } else {
-    fetchData();
-  }
+  (listUsers.length > 0) ? TableRow(listUsers): fetchData();
   fetchBtn();
 })
 
