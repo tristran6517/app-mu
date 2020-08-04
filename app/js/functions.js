@@ -306,8 +306,8 @@ document.querySelector(".sort-age").addEventListener("click", function () {
 
 document.querySelector(".sort-date").addEventListener("click", function () {
   stateSortDate
-    ? users.sort((a, b) => a.permissionsDate - b.permissionsDate)
-    : users.sort((a, b) => b.permissionsDate - a.permissionsDate);
+    ? users.sort((a, b) => moment(a.permissionsDate, "DD/MM/YYYY").toDate() - moment(b.permissionsDate, "DD/MM/YYYY").toDate())
+    : users.sort((a, b) => moment(b.permissionsDate, "DD/MM/YYYY").toDate() - moment(a.permissionsDate, "DD/MM/YYYY").toDate());
   stateSortDate = !stateSortDate;
   reloadEvent();
 });
