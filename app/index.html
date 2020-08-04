@@ -8,6 +8,7 @@
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="./css/styles.css">
   <title>User Managenent</title>
 </head>
@@ -39,28 +40,32 @@
     <div class="left">
       <h3 id="title-form">Add User</h3>
       <form name="formAdd" method="POST" class="form formAdd d-block" onsubmit="addItem()">
-        <div class="form__row">
+        <div class="form__row mb-2">
           <label for="name">Name<span class="text-danger">*</span></label>
           <input type="text" id="name" name="name" class="w-100 input-user" required>
         </div>
-        <div class="form__row">
+        <div class="form__row mb-2">
           <label for="age">Age<span class="text-danger">*</span></label>
           <input type="number" min="1900" max="2049" id="age" name="age" class="input-user" required>
         </div>
-        <div class="form__row">
+        <div class="form__row mb-2">
           <label for="email">Email<span class="text-danger">*</span></label>
           <input type="email" id="email" onblur="validateEmail(this.value,this)" name="email" class="input-user"
             required>
         </div>
-        <div class="form__row">
+        <div class="form__row mb-2">
           <label for="role">Role</label>
-          <div class="form__arrow mb-4 w-100">
+          <div class="form__arrow w-100">
             <select name="role" id="role" class="form__select input-user">
               <option value="0" selected>Customer</option>
               <option value="1">Admin</option>
               <option value="2">User</option>
             </select>
           </div>
+        </div>
+        <div class="form__row mb-4">
+          <label for="role">Create Date</label>
+          <input type="text" name="permissionsDate" id="datepicker" class="input-user">
         </div>
         <input type="submit" class="d-block btn btn-primary m-auto w-50" id="btn-submit" value="Add User" />
       </form>
@@ -72,11 +77,15 @@
             <th>Name</th>
             <th>
               Age
-              <i class="fa fa-sort btn-sort" aria-hidden="true"></i>
+              <i class="fa fa-sort sort-age" aria-hidden="true"></i>
             </th>
             <th>Email</th>
             <th>Role</th>
             <th>Module</th>
+            <th>
+                Permissions Date
+                <i class="fa fa-sort sort-date" aria-hidden="true"></i>
+            </th>
           </tr>
         </thead>
         <tbody id="table__body">
@@ -89,6 +98,9 @@
       <div class="modal-popup__close">X</div>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="./js/moment.min.js"></script>
   <script src="./js/functions.js"></script>
 </body>
 
